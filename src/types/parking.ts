@@ -1,5 +1,6 @@
-export type SlotStatus = 'available' | 'occupied' | 'reserved';
+export type SlotStatus = 'available' | 'occupied';
 export type SlotCategory = 'general' | 'women' | 'disabled';
+export type TrafficLevel = 'clear' | 'moderate' | 'heavy';
 
 export interface ParkingSlot {
   id: string;
@@ -28,4 +29,5 @@ export interface RouteStep {
   instruction: string;
   direction: 'straight' | 'left' | 'right' | 'arrive';
   landmark?: string;
+  trafficLevel?: TrafficLevel;
 }

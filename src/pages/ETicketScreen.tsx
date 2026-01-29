@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { useParking } from '@/context/ParkingContext';
-import { QRCode } from '@/components/parking/QRCode';
 import { RouteGuide } from '@/components/parking/RouteGuide';
 import { Button } from '@/components/ui/button';
 import { 
@@ -11,7 +10,6 @@ import {
   Tag, 
   Clock, 
   ArrowLeft,
-  Share2,
   Download
 } from 'lucide-react';
 
@@ -70,9 +68,7 @@ const ETicketScreen: React.FC = () => {
               <Ticket className="w-5 h-5 text-primary" />
               <span className="font-semibold text-foreground">E-Ticket</span>
             </div>
-            <Button variant="ghost" size="icon" className="w-8 h-8">
-              <Share2 className="w-4 h-4" />
-            </Button>
+            <div className="w-8" /> {/* Spacer for alignment */}
           </div>
         </div>
       </header>
@@ -83,14 +79,9 @@ const ETicketScreen: React.FC = () => {
         <div className="bg-card rounded-2xl border border-border shadow-lg overflow-hidden animate-scale-in">
           {/* Ticket Header */}
           <div className="bg-gradient-to-r from-primary to-accent p-6 text-primary-foreground">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm opacity-80">Assigned Slot</p>
-                <p className="text-4xl font-bold font-mono mt-1">{currentTicket.slotId}</p>
-              </div>
-              <div className="bg-white/20 backdrop-blur rounded-xl p-3">
-                <QRCode value={currentTicket.qrCode} size={80} />
-              </div>
+            <div>
+              <p className="text-sm opacity-80">Assigned Slot</p>
+              <p className="text-4xl font-bold font-mono mt-1">{currentTicket.slotId}</p>
             </div>
           </div>
 
@@ -151,20 +142,6 @@ const ETicketScreen: React.FC = () => {
             </div>
           </div>
 
-          {/* Dashed Separator */}
-          <div className="relative">
-            <div className="absolute inset-x-0 border-t-2 border-dashed border-border" />
-            <div className="absolute -left-3 -top-3 w-6 h-6 rounded-full bg-background" />
-            <div className="absolute -right-3 -top-3 w-6 h-6 rounded-full bg-background" />
-          </div>
-
-          {/* QR Section */}
-          <div className="p-6 flex flex-col items-center space-y-3">
-            <QRCode value={currentTicket.qrCode} size={140} />
-            <p className="text-xs text-muted-foreground text-center">
-              Scan at checkpoints for validation
-            </p>
-          </div>
         </div>
 
         {/* Route Guide */}
@@ -177,10 +154,6 @@ const ETicketScreen: React.FC = () => {
           <Button variant="outline" className="flex-1 h-12 gap-2">
             <Download className="w-4 h-4" />
             Save Ticket
-          </Button>
-          <Button variant="outline" className="flex-1 h-12 gap-2">
-            <Share2 className="w-4 h-4" />
-            Share
           </Button>
         </div>
 

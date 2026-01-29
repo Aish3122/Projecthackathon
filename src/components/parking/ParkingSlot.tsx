@@ -35,12 +35,14 @@ export const ParkingSlotComponent: React.FC<ParkingSlotProps> = ({
         'relative w-12 h-10 rounded-md font-mono text-xs font-medium transition-all duration-200',
         'flex flex-col items-center justify-center gap-0.5',
         'border-2',
+        // Base status styling
         isAvailable && 'bg-slot-available/20 border-slot-available text-slot-available hover:bg-slot-available hover:text-white cursor-pointer',
         slot.status === 'occupied' && 'bg-slot-occupied/20 border-slot-occupied/50 text-slot-occupied/70 cursor-not-allowed',
-        slot.status === 'reserved' && 'bg-slot-reserved/20 border-slot-reserved text-slot-reserved cursor-not-allowed',
+        // Category border overrides (only border, not fill)
+        slot.category === 'disabled' && isAvailable && 'border-slot-disabled border-2',
+        slot.category === 'women' && isAvailable && 'border-slot-women border-2',
+        // Selection state
         isSelected && 'ring-2 ring-primary ring-offset-2 ring-offset-background bg-primary text-primary-foreground scale-110 z-10',
-        slot.category === 'disabled' && isAvailable && 'border-slot-disabled bg-slot-disabled/20 text-slot-disabled hover:bg-slot-disabled',
-        slot.category === 'women' && isAvailable && 'border-slot-women bg-slot-women/20 text-slot-women hover:bg-slot-women',
       )}
     >
       {slot.status === 'occupied' && <Car className="w-4 h-4 opacity-60" />}
