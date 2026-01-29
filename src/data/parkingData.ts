@@ -26,7 +26,8 @@ export const getZoneTraffic = (zone: string): TrafficLevel => {
     'C': 'clear',
     'D': 'moderate',
     'W': 'clear',
-    'D-Section': 'clear'
+    'D-Section': 'clear',
+    'E-Section': 'clear'
   };
   return trafficMap[zone] || 'clear';
 };
@@ -90,6 +91,26 @@ export const generateParkingSlots = (floor: number): ParkingSlot[] => {
         category: 'disabled',
         coordinates: {
           x: 1000 + num * 30,
+          y: rowIndex * 50,
+        },
+      });
+    }
+  });
+
+  // Generate Electric car section slots (E-Section)
+  ['01', '02', '03'].forEach((row, rowIndex) => {
+    for (let num = 1; num <= 6; num++) {
+      const id = `E${row}-${num.toString().padStart(2, '0')}`;
+      slots.push({
+        id,
+        zone: 'E-Section',
+        floor,
+        row,
+        number: num,
+        status: getRandomStatus(),
+        category: 'electric',
+        coordinates: {
+          x: 1200 + num * 30,
           y: rowIndex * 50,
         },
       });

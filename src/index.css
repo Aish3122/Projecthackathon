@@ -41,6 +41,7 @@
     --slot-occupied: 0 70% 42%;
     --slot-disabled: 45 90% 50%;
     --slot-women: 330 65% 50%;
+    --slot-electric: 200 75% 50%;
     
     /* Traffic Status Colors */
     --traffic-clear: 145 75% 32%;

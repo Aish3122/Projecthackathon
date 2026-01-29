@@ -36,6 +36,7 @@ export const ParkingGrid: React.FC = () => {
   const rows = ['01', '02', '03', '04'];
   const womenRows = ['01', '02', '03'];
   const disabledRows = ['01', '02'];
+  const electricRows = ['01', '02', '03'];
 
   const getSlotByPosition = (zone: string, row: string, num: number) => {
     return floorSlots.find(
@@ -148,7 +149,7 @@ export const ParkingGrid: React.FC = () => {
       </div>
 
       {/* Special Sections */}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-6 mb-8">
         {/* Women Section */}
         <div>
           <h4 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wide flex items-center gap-2">
@@ -166,6 +167,15 @@ export const ParkingGrid: React.FC = () => {
           </h4>
           {renderZoneSection('D-Section', 'Disabled Section', disabledRows, 'text-slot-disabled bg-slot-disabled/10', 'Accessible')}
         </div>
+      </div>
+
+      {/* Electric Car Section */}
+      <div>
+        <h4 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wide flex items-center gap-2">
+          <div className="w-3 h-3 rounded-sm border-2 border-slot-electric bg-slot-electric/20" />
+          Electric Car Parking
+        </h4>
+        {renderZoneSection('E-Section', 'E-Car Section', electricRows, 'text-slot-electric bg-slot-electric/10', 'EV Charging')}
       </div>
 
       {/* Driving Lane Indicator */}

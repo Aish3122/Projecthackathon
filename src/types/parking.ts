@@ -1,5 +1,5 @@
 export type SlotStatus = 'available' | 'occupied';
-export type SlotCategory = 'general' | 'women' | 'disabled';
+export type SlotCategory = 'general' | 'women' | 'disabled' | 'electric';
 export type TrafficLevel = 'clear' | 'moderate' | 'heavy';
 
 export interface ParkingSlot {
