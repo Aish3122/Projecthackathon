@@ -54,9 +54,13 @@ export default {
         slot: {
           available: "hsl(var(--slot-available))",
           occupied: "hsl(var(--slot-occupied))",
-          reserved: "hsl(var(--slot-reserved))",
           disabled: "hsl(var(--slot-disabled))",
           women: "hsl(var(--slot-women))",
+        },
+        traffic: {
+          clear: "hsl(var(--traffic-clear))",
+          moderate: "hsl(var(--traffic-moderate))",
+          heavy: "hsl(var(--traffic-heavy))",
         },
       },
       borderRadius: {

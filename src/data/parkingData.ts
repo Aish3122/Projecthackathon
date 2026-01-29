@@ -1,7 +1,8 @@
 import { ParkingSlot, SlotCategory, SlotStatus, TrafficLevel } from '@/types/parking';
 
-const zones = ['A', 'B', 'C', 'D'];
-const rows = ['01', '02', '03', '04', '05', '06', '07', '08'];
+// Sections: General zones (A, B, C, D), Women section, Disabled section
+const generalZones = ['A', 'B', 'C', 'D'];
+const rows = ['01', '02', '03', '04'];
 
 const getRandomStatus = (): SlotStatus => {
   const rand = Math.random();
@@ -16,16 +17,25 @@ const getRandomTraffic = (): TrafficLevel => {
   return 'heavy';
 };
 
-const getCategory = (zone: string, row: string): SlotCategory => {
-  if (zone === 'A' && ['01', '02'].includes(row)) return 'disabled';
-  if (zone === 'B' && ['01', '02', '03'].includes(row)) return 'women';
-  return 'general';
+// Zone traffic levels - simulated
+export const getZoneTraffic = (zone: string): TrafficLevel => {
+  // Simulate traffic based on zone - in real app this would be calculated
+  const trafficMap: Record<string, TrafficLevel> = {
+    'A': 'heavy',
+    'B': 'moderate', 
+    'C': 'clear',
+    'D': 'moderate',
+    'W': 'clear',
+    'D-Section': 'clear'
+  };
+  return trafficMap[zone] || 'clear';
 };
 
 export const generateParkingSlots = (floor: number): ParkingSlot[] => {
   const slots: ParkingSlot[] = [];
   
-  zones.forEach((zone, zoneIndex) => {
+  // Generate General zone slots
+  generalZones.forEach((zone, zoneIndex) => {
     rows.forEach((row, rowIndex) => {
       for (let num = 1; num <= 6; num++) {
         const id = `${zone}${row}-${num.toString().padStart(2, '0')}`;
@@ -36,7 +46,7 @@ export const generateParkingSlots = (floor: number): ParkingSlot[] => {
           row,
           number: num,
           status: getRandomStatus(),
-          category: getCategory(zone, row),
+          category: 'general',
           coordinates: {
             x: zoneIndex * 200 + num * 30,
             y: rowIndex * 50,
@@ -44,6 +54,46 @@ export const generateParkingSlots = (floor: number): ParkingSlot[] => {
         });
       }
     });
+  });
+
+  // Generate Women section slots (W zone)
+  ['01', '02', '03'].forEach((row, rowIndex) => {
+    for (let num = 1; num <= 6; num++) {
+      const id = `W${row}-${num.toString().padStart(2, '0')}`;
+      slots.push({
+        id,
+        zone: 'W',
+        floor,
+        row,
+        number: num,
+        status: getRandomStatus(),
+        category: 'women',
+        coordinates: {
+          x: 800 + num * 30,
+          y: rowIndex * 50,
+        },
+      });
+    }
+  });
+
+  // Generate Disabled section slots (D-Section)
+  ['01', '02'].forEach((row, rowIndex) => {
+    for (let num = 1; num <= 6; num++) {
+      const id = `D${row}-${num.toString().padStart(2, '0')}`;
+      slots.push({
+        id,
+        zone: 'D-Section',
+        floor,
+        row,
+        number: num,
+        status: getRandomStatus(),
+        category: 'disabled',
+        coordinates: {
+          x: 1000 + num * 30,
+          y: rowIndex * 50,
+        },
+      });
+    }
   });
   
   return slots;
