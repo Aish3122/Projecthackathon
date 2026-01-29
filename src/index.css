@@ -39,8 +39,7 @@
     /* Parking Status Colors */
     --slot-available: 145 70% 45%;
     --slot-occupied: 0 75% 55%;
-    --slot-reserved: 45 95% 55%;
-    --slot-disabled: 220 80% 55%;
+    --slot-disabled: 45 95% 55%;
     --slot-women: 330 70% 55%;
 
     /* Gradients */
@@ -116,10 +115,6 @@
 
   .slot-occupied {
     @apply bg-[hsl(var(--slot-occupied))] text-white;
-  }
-
-  .slot-reserved {
-    @apply bg-[hsl(var(--slot-reserved))] text-black shadow-[0_0_12px_hsl(var(--slot-reserved)/0.4)];
   }
 
   .glow-primary {

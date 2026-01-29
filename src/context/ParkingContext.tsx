@@ -18,7 +18,7 @@ interface ParkingContextType {
   setSelectedCategory: (category: SlotCategory | 'all') => void;
   assignSlot: (slot: ParkingSlot) => ETicket;
   getAvailableSlots: () => ParkingSlot[];
-  getSlotStats: () => { available: number; occupied: number; reserved: number };
+  getSlotStats: () => { available: number; occupied: number };
   clearTicket: () => void;
 }
 
@@ -50,7 +50,6 @@ export const ParkingProvider: React.FC<{ children: ReactNode }> = ({ children })
     return {
       available: floorSlots.filter(s => s.status === 'available').length,
       occupied: floorSlots.filter(s => s.status === 'occupied').length,
-      reserved: floorSlots.filter(s => s.status === 'reserved').length,
     };
   };
 
@@ -69,7 +68,7 @@ export const ParkingProvider: React.FC<{ children: ReactNode }> = ({ children })
 
     setSlots(prev => 
       prev.map(s => 
-        s.id === slot.id ? { ...s, status: 'reserved' as const } : s
+        s.id === slot.id ? { ...s, status: 'occupied' as const } : s
       )
     );
 

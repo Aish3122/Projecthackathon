@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouteStep } from '@/types/parking';
-import { ArrowUp, ArrowLeft, ArrowRight, MapPin, CheckCircle2 } from 'lucide-react';
+import { ArrowUp, ArrowLeft, ArrowRight, MapPin, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface RouteGuideProps {
@@ -21,16 +21,78 @@ export const RouteGuide: React.FC<RouteGuideProps> = ({ route }) => {
     }
   };
 
+  const getTrafficColor = (trafficLevel?: string) => {
+    switch (trafficLevel) {
+      case 'clear':
+        return 'bg-slot-available text-white';
+      case 'moderate':
+        return 'bg-amber-500 text-black';
+      case 'heavy':
+        return 'bg-slot-occupied text-white';
+      default:
+        return 'bg-muted text-muted-foreground';
+    }
+  };
+
+  const getTrafficLabel = (trafficLevel?: string) => {
+    switch (trafficLevel) {
+      case 'clear':
+        return 'Clear';
+      case 'moderate':
+        return 'Moderate';
+      case 'heavy':
+        return 'Heavy';
+      default:
+        return '';
+    }
+  };
+
+  const getTrafficLineColor = (trafficLevel?: string) => {
+    switch (trafficLevel) {
+      case 'clear':
+        return 'bg-slot-available';
+      case 'moderate':
+        return 'bg-amber-500';
+      case 'heavy':
+        return 'bg-slot-occupied';
+      default:
+        return 'bg-border';
+    }
+  };
+
   return (
     <div className="space-y-3">
-      <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
-        <MapPin className="w-4 h-4 text-primary" />
-        Route to Your Slot
-      </h4>
+      <div className="flex items-center justify-between">
+        <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+          <MapPin className="w-4 h-4 text-primary" />
+          Route to Your Slot
+        </h4>
+        <div className="flex items-center gap-2 text-xs">
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 rounded-full bg-slot-available" />
+            <span className="text-muted-foreground">Clear</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 rounded-full bg-amber-500" />
+            <span className="text-muted-foreground">Moderate</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <div className="w-2 h-2 rounded-full bg-slot-occupied" />
+            <span className="text-muted-foreground">Heavy</span>
+          </div>
+        </div>
+      </div>
       
       <div className="relative">
-        {/* Connecting line */}
-        <div className="absolute left-4 top-6 bottom-6 w-0.5 bg-border" />
+        {/* Dynamic connecting line based on traffic */}
+        <div className="absolute left-4 top-6 bottom-6 w-0.5 flex flex-col">
+          {route.slice(0, -1).map((step, index) => (
+            <div 
+              key={index}
+              className={cn('flex-1', getTrafficLineColor(step.trafficLevel))}
+            />
+          ))}
+        </div>
         
         <div className="space-y-2">
           {route.map((step, index) => (
@@ -66,9 +128,20 @@ export const RouteGuide: React.FC<RouteGuideProps> = ({ route }) => {
                 )}
               </div>
 
-              <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
-                {index + 1}/{route.length}
-              </span>
+              <div className="flex items-center gap-2">
+                {step.trafficLevel && step.trafficLevel !== 'clear' && index !== route.length - 1 && (
+                  <span className={cn(
+                    'text-xs px-2 py-0.5 rounded-full flex items-center gap-1',
+                    getTrafficColor(step.trafficLevel)
+                  )}>
+                    {step.trafficLevel === 'heavy' && <AlertTriangle className="w-3 h-3" />}
+                    {getTrafficLabel(step.trafficLevel)}
+                  </span>
+                )}
+                <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
+                  {index + 1}/{route.length}
+                </span>
+              </div>
             </div>
           ))}
         </div>

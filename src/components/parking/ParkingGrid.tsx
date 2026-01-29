@@ -37,10 +37,6 @@ export const ParkingGrid: React.FC = () => {
             <div className="w-3 h-3 rounded-sm bg-slot-occupied" />
             <span className="text-muted-foreground">Occupied</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-sm bg-slot-reserved" />
-            <span className="text-muted-foreground">Reserved</span>
-          </div>
         </div>
       </div>
 

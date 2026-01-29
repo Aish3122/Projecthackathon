@@ -1,13 +1,19 @@
-import { ParkingSlot, SlotCategory, SlotStatus } from '@/types/parking';
+import { ParkingSlot, SlotCategory, SlotStatus, TrafficLevel } from '@/types/parking';
 
 const zones = ['A', 'B', 'C', 'D'];
 const rows = ['01', '02', '03', '04', '05', '06', '07', '08'];
 
 const getRandomStatus = (): SlotStatus => {
   const rand = Math.random();
-  if (rand < 0.45) return 'available';
-  if (rand < 0.9) return 'occupied';
-  return 'reserved';
+  if (rand < 0.5) return 'available';
+  return 'occupied';
+};
+
+const getRandomTraffic = (): TrafficLevel => {
+  const rand = Math.random();
+  if (rand < 0.5) return 'clear';
+  if (rand < 0.8) return 'moderate';
+  return 'heavy';
 };
 
 const getCategory = (zone: string, row: string): SlotCategory => {
@@ -63,32 +69,37 @@ export const generateTicketId = (): string => {
   return `TKT-${timestamp}-${random}`;
 };
 
-export const generateRouteToSlot = (slot: ParkingSlot): { instruction: string; direction: 'straight' | 'left' | 'right' | 'arrive'; landmark?: string }[] => {
+export const generateRouteToSlot = (slot: ParkingSlot): { instruction: string; direction: 'straight' | 'left' | 'right' | 'arrive'; landmark?: string; trafficLevel?: TrafficLevel }[] => {
   return [
     {
       instruction: 'Enter through Main Gate',
       direction: 'straight',
       landmark: 'Security Checkpoint',
+      trafficLevel: getRandomTraffic(),
     },
     {
       instruction: `Proceed to Floor ${slot.floor}`,
       direction: slot.floor > 1 ? 'right' : 'straight',
       landmark: slot.floor > 1 ? 'Ramp/Elevator' : undefined,
+      trafficLevel: getRandomTraffic(),
     },
     {
       instruction: `Navigate to Zone ${slot.zone}`,
       direction: ['A', 'B'].includes(slot.zone) ? 'left' : 'right',
       landmark: `Zone ${slot.zone} Sign`,
+      trafficLevel: getRandomTraffic(),
     },
     {
       instruction: `Find Row ${slot.row}`,
       direction: 'straight',
       landmark: `Row ${slot.row} Marker`,
+      trafficLevel: getRandomTraffic(),
     },
     {
       instruction: `Park at Slot ${slot.id}`,
       direction: 'arrive',
       landmark: 'Your Assigned Slot',
+      trafficLevel: 'clear',
     },
   ];
 };
