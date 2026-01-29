@@ -1,7 +1,7 @@
 import React from 'react';
 import { ParkingSlot as ParkingSlotType } from '@/types/parking';
 import { cn } from '@/lib/utils';
-import { Accessibility, User, Car } from 'lucide-react';
+import { Accessibility, User, Car, Zap } from 'lucide-react';
 
 interface ParkingSlotProps {
   slot: ParkingSlotType;
@@ -22,6 +22,8 @@ export const ParkingSlotComponent: React.FC<ParkingSlotProps> = ({
         return <Accessibility className="w-3 h-3" />;
       case 'women':
         return <User className="w-3 h-3" />;
+      case 'electric':
+        return <Zap className="w-3 h-3" />;
       default:
         return null;
     }
@@ -41,6 +43,7 @@ export const ParkingSlotComponent: React.FC<ParkingSlotProps> = ({
         // Category border overrides (only border, not fill)
         slot.category === 'disabled' && isAvailable && 'border-slot-disabled border-2',
         slot.category === 'women' && isAvailable && 'border-slot-women border-2',
+        slot.category === 'electric' && isAvailable && 'border-slot-electric border-2',
         // Selection state
         isSelected && 'ring-2 ring-primary ring-offset-2 ring-offset-background bg-primary text-primary-foreground scale-110 z-10',
       )}

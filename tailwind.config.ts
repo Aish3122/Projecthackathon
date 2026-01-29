@@ -56,6 +56,7 @@ export default {
           occupied: "hsl(var(--slot-occupied))",
           disabled: "hsl(var(--slot-disabled))",
           women: "hsl(var(--slot-women))",
+          electric: "hsl(var(--slot-electric))",
         },
         traffic: {
           clear: "hsl(var(--traffic-clear))",

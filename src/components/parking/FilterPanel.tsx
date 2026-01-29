@@ -2,7 +2,7 @@ import React from 'react';
 import { useParking } from '@/context/ParkingContext';
 import { SlotCategory } from '@/types/parking';
 import { cn } from '@/lib/utils';
-import { Users, Accessibility, User, Layers } from 'lucide-react';
+import { Users, Accessibility, User, Layers, Zap } from 'lucide-react';
 
 export const FilterPanel: React.FC = () => {
   const { selectedFloor, setSelectedFloor, selectedCategory, setSelectedCategory } = useParking();
@@ -12,6 +12,7 @@ export const FilterPanel: React.FC = () => {
     { value: 'general', label: 'General', icon: <Users className="w-4 h-4" /> },
     { value: 'women', label: 'Women Only', icon: <User className="w-4 h-4" /> },
     { value: 'disabled', label: 'Disabled', icon: <Accessibility className="w-4 h-4" /> },
+    { value: 'electric', label: 'E-Cars', icon: <Zap className="w-4 h-4" /> },
   ];
 
   const floors = [1, 2];
@@ -58,6 +59,7 @@ export const FilterPanel: React.FC = () => {
                   : 'bg-muted/50 text-muted-foreground border-transparent hover:bg-muted hover:text-foreground',
                 cat.value === 'women' && selectedCategory === cat.value && 'bg-slot-women border-slot-women',
                 cat.value === 'disabled' && selectedCategory === cat.value && 'bg-slot-disabled border-slot-disabled',
+                cat.value === 'electric' && selectedCategory === cat.value && 'bg-slot-electric border-slot-electric',
               )}
             >
               {cat.icon}
